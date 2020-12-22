@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <h1>Post details</h1>
+</div>
+
+<div class="container mt-5">
+    <div class="alert alert-info mt-2">
+            <h1 th:text="${blog.getTitle()}"></h1><br>
+            <h5 th:text="${blog.getDescription()}"></h5><br><br>
+        <div class="row">
+            <a th:href="'/blog/' + ${blog.id} + '/edit'" class="btn btn-warning ">Edit</a>
+            <br>
+            <a th:href="'/blog/' + ${blog.id} + '/comment'" class="btn btn-warning ">Comment</a>
+            <br>
+            <form th:action="'/blog/' + ${blog.id} + '/delete'" method="post">
+                <button class="btn btn-warning" type="submit">Delete</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-5" style="color: coral">
+    <th:block th:if="${comments.isEmpty()}">
+        <div class="alert-success alert mt-2" style="color: coral">
+            <h1 style="color: red" th:text="#{comment.nofound}"></h1>
+        </div>
+    </th:block>
+
+    <th:block th:if="${!comments.isEmpty()}">
+        <div th:each="comm : ${comments}" class="alert alert-success mt-2">
+            <h1 th:text="${comm.getId()}"></h1><br>
+            <h5 th:text="${comm.getCommentText()}"></h5><br><br>
+            <div class="row">
+                <a th:href="'/blog/comment/' + ${comm.id} + '/edit'" class="btn btn-warning ">Edit</a>
+                <br>
+                <form th:action="'/blog/comment/' + ${comm.id} + '/delete'" method="post">
+                    <button class="btn btn-warning" type="submit">Delete</button>
+                </form>
+            </div>
+        </div>
+
+    </th:block>
+</div>
+
+</body>
+</html>

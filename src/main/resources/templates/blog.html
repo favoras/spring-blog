@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Web Blog</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+</head>
+<body>
+<header th:insert="fragments/header.html :: header"></header>
+
+<div class="container mt-5">
+    <h1>Web Blog</h1>
+</div>
+
+<div class="container mt-5">
+<th:block th:if="${posts.isEmpty()}">
+    <div class="alert-info alert mt-2">
+        <h1 style="color: red" th:text="#{post.nofound}"></h1>
+    </div>
+
+</th:block>
+
+<th:block th:if="${!posts.isEmpty()}">
+        <div th:each="post : ${posts}" class="alert alert-info mt-2">
+            <h1 th:text="${post.getTitle()}"></h1><br>
+            <h5 th:text="${post.getDescription()}"></h5><br><br>
+            <a th:href="'/blog/' + ${post.id}" class="btn btn-warning ">Settings</a>
+            <a th:href="'/blog/' + ${post.id}"><p class="text-right"><b>Comments: </b><span th:text="${test}"></span></p></a>
+        </div>
+</th:block>
+</div>
+
+</body>
+</html>
